@@ -1,0 +1,7 @@
+<div id= "<%= userstock.ticker %>-news-container"  class="row" style="display:none;">
+  <% userstock.get_feed_entries_for_stock.each do |feedentry| %>
+    <% if feedentry.summary %>
+        <div class="panel-body feed-summary"><%= raw(feedentry.summary) %></div>
+    <% end %>
+  <% end %>
+</div>

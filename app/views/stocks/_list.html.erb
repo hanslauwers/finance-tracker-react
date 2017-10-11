@@ -1,25 +1,30 @@
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Symbol</th>
-      <th>Current price</th>
-      <% if @user.id == current_user.id %>
-        <th>Actions</th>
-      <% end %>
-    </tr>
-  </thead>
-  <tbody>
+<div class="stock-table-container">
+  <div class="stock-table-header row">
+    <div class="col-md-12">
+      <span class="stock-table-title col-md-3"><h4>Name</h4></span>
+      <span class="stock-table-title col-md-3"><h4>Symbol</h4></span>
+      <span class="stock-table-title col-md-3"><h4>Current price</h4></span>
+      <span class="stock-table-title col-md-3"><h4>Actions</h4></span>
+    </div>
+  </div>
+  <div class="stock-table-data-container">
     <% @user_stocks.each do |userstock| %>
-      <tr>
-        <td><%= userstock.name %></td>
-        <td><%= userstock.ticker %></td>
-        <td><%= userstock.price %></td>
-        <% if @user.id == current_user.id %>
-          <td><%= link_to 'Delete', user_stock_path(userstock), method: :delete, :data => {confirm: "Are you sure?"},
-                    class: "btn btn-xs btn-danger" %></td>
-        <% end %>
-      </tr>
+      <div class="stock-table-data col-md-12 panel panel-default">
+        <div class="stock-data row">
+          <div class="col-md-3"><strong><%= userstock.name %></strong></div>
+          <div class="col-md-3"><strong><%= userstock.ticker %></strong></div>
+          <div class="col-md-3"><strong><%= userstock.price %></strong></div>
+          <div class="col-md-3">
+          <% if @user.id == current_user.id %>
+            <%= link_to 'Delete', user_stock_path(userstock), method: :delete, :data => {confirm: "Are you sure?"},
+                      class: "btn btn-xs btn-danger" %>
+          <% end %>
+            <div class="btn btn-xs btn-success" onclick="javascript:$('#<%= userstock.ticker %>-news-container').toggle();">Show/Hide News</div>
+          </div>
+        </div>
+        
+        <%= render partial: 'stocks/feed', :locals => {:userstock => userstock} %>
+      </div>
     <% end %>
-  </tbody>
-</table>
+  </div>
+</div>

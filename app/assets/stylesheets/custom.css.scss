@@ -26,3 +26,23 @@
     background-color: darken(#D9534F, 20%);
   }
 }
+
+/*Stock table*/
+
+
+
+.stock-table-container{
+  .stock-data{
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .panel-body.feed-summary{
+    border-top: 1px solid #eaeaea;
+    td{
+      vertical-align: top;
+      img{
+        margin-right: 10px;
+      }
+    }
+  }
+}

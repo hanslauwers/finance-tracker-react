@@ -24,4 +24,16 @@ class Stock < ActiveRecord::Base
     
     "Unavailable"
   end
+  
+  def get_feed_entries_for_stock
+    if(name)
+      url = "https://news.google.com/news/rss/search/section/q/#{name}/#{name}?hl=en&ned=us".gsub(' ', '%20')
+      feed = Feedjira::Feed.fetch_and_parse(url)
+      feed.entries = feed.entries[0 .. 4]
+      feed.entries
+    else
+      return nil
+    end
+  end
+  
 end
