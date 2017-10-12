@@ -1,4 +1,8 @@
-
+.content-zone{
+  background-color: #fafafa;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
 .results-block{
   display: inline-block;
 }
@@ -28,14 +32,39 @@
   }
 }
 
+/*My Friends, My Portfolio links */
+
+.view-profile-btn, .rm-friend-btn, .add-to-stocks-btn, .delete-stock-btn, .news-for-stock-btn{
+  color:white;
+  &:visited{
+    color:white;
+  }
+}
+
 /*Stock table*/
 
 
-
+.stock-page-title{
+  margin-bottom: 25px;
+}
 .stock-table-container{
   .stock-data{
     padding-top: 10px;
     padding-bottom: 10px;
+  }
+}
+.stock-info-page-panel{
+  font-size: 1.2em;
+  font-weight: bold;
+}
+.link-to-all-stock-news{
+  float:right;
+  margin-right: 15px;
+  a{
+    color:white;
+  }
+  a:visited{
+      color:white;
   }
 }
 .feed-container{
@@ -49,6 +78,7 @@
   .feed-entry-title{
     display: inline-block;
     max-width: 75%;
+    font-size: 1.2em;
   }
   .feed-entry-date{
     float:right;

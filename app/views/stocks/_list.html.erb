@@ -17,9 +17,9 @@
           <div class="col-md-3">
           <% if @user.id == current_user.id %>
             <%= link_to 'Delete', user_stock_path(userstock), method: :delete, :data => {confirm: "Are you sure?"},
-                      class: "btn btn-xs btn-danger" %>
+                      class: "btn btn-xs btn-danger delete-stock-btn" %>
           <% end %>
-            <%= link_to 'News for Stock', stock_path(userstock), class: 'btn btn-xs btn-success' %>
+            <%= link_to 'News for Stock', stock_path(userstock), class: 'btn btn-xs btn-success news-for-stock-btn' %>
           </div>
         </div>
       </div>

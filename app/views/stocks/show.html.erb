@@ -1,3 +1,22 @@
-<h1><%= @stock.name %></h1>
+<h2 class="stock-page-title">Latest news for <%= @stock.name %></h2>
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading stock-info-page-panel">
+        Stock information for <%= @stock.name %>
+      </div>
+      <div class="panel-body stock-info-page-body">
+        <ul>
+          <li><strong>Symbol: </strong><%= @stock.ticker %></li>
+          <li><strong>Current price: </strong><%= @stock.price %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="link-to-all-stock-news">
+    <%= link_to "See all #{@stock.name}'s news", "https://news.google.com/news/search/section/q/#{@stock.name}/#{@stock.name}?hl=en&ned=us", 
+          class: "btn btn-success", target: "_blank" %>
+  </div>
+</div>
 
 <%= render partial: 'feed', :locals => {:userstock => @stock} %>

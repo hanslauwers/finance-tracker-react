@@ -21,9 +21,9 @@
         <tr>
           <td><%= friend.full_name %></td>
           <td><%= friend.email %></td>
-          <td><%= link_to 'View profile', user_path(friend), class: "btn btn-xs btn-primary" %>
+          <td><%= link_to 'View profile', user_path(friend), class: "btn btn-xs btn-primary view-profile-btn" %>
               <%= link_to 'Remove friend', friendship_path(friend), method: :delete, :data => {confirm: "Are you sure?"},
-                    class: "btn btn-xs btn-danger" %></td>
+                    class: "btn btn-xs btn-danger rm-friend-btn" %></td>
         </tr>
       <% end %>
     </tbody>
