@@ -23,10 +23,10 @@
               <tr>
                 <td><strong>Name: </strong> <%= user.full_name %></td>
                 <td><strong>Email: </strong> <%= user.email %></td>
-                <td><strong>Profile: </strong><%= link_to "View profile", user_path(user), class: "btn btn-xs btn-primary" %>
+                <td><strong>Profile: </strong><%= link_to "View profile", user_path(user), class: "btn btn-xs btn-primary view-profile-btn" %>
                     <% if current_user.not_friends_with?(user.id) %>
                       <%= link_to "Add as friend", add_friend_path(user: current_user, friend: user), method: :post, 
-                          class: "btn btn-xs btn-success" %>
+                          class: "btn btn-xs btn-success add-friend-btn" %>
                     <% else %>
                       <span class="label label-primary">
                         You are friends

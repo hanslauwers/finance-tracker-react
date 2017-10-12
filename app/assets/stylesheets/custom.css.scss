@@ -5,6 +5,9 @@
 }
 .results-block{
   display: inline-block;
+  td{
+    padding-bottom: 5px;
+  }
 }
 
 .no-padding{
@@ -34,12 +37,13 @@
 
 /*My Friends, My Portfolio links */
 
-.view-profile-btn, .rm-friend-btn, .add-to-stocks-btn, .delete-stock-btn, .news-for-stock-btn{
+.view-profile-btn, .rm-friend-btn, .add-friend-btn, .add-to-stocks-btn, .delete-stock-btn, .news-for-stock-btn{
   color:white;
   &:visited{
     color:white;
   }
 }
+
 
 /*Stock table*/
 
