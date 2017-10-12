@@ -1,7 +1,16 @@
-<div id= "<%= userstock.ticker %>-news-container"  class="row" style="display:none;">
-  <% userstock.get_feed_entries_for_stock.each do |feedentry| %>
-    <% if feedentry.summary %>
-        <div class="panel-body feed-summary"><%= raw(feedentry.summary) %></div>
+<div class="row">
+  <div class="col-md-12">
+  <div class="feed-container">
+    <% userstock.get_feed_entries_for_stock.each do |feedentry| %>
+      <div class="panel panel-info">
+        <div class="panel-heading ">
+          <span class="feed-entry-title"><strong><%= link_to feedentry.title, feedentry.url %></strong></span>
+          <span class="feed-entry-date"><%= parse_date_time(feedentry.published) %></span>
+        </div>
+        <% if feedentry.summary %>
+          <div class="panel-body feed-summary"><%= raw(feedentry.summary) %></div>
+        <% end %>
+      </div>
     <% end %>
-  <% end %>
+  </div>
 </div>

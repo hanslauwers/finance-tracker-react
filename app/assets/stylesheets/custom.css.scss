@@ -1,3 +1,4 @@
+
 .results-block{
   display: inline-block;
 }
@@ -36,13 +37,44 @@
     padding-top: 10px;
     padding-bottom: 10px;
   }
-  .panel-body.feed-summary{
-    border-top: 1px solid #eaeaea;
+}
+.feed-container{
+  
+  margin-top: 25px;
+  a:hover
+  {
+    background-color: transparent !important;
+    color: black !important;
+  }
+  .feed-entry-title{
+    display: inline-block;
+    max-width: 75%;
+  }
+  .feed-entry-date{
+    float:right;
+    font-weight: bold;
+    color: gray;
+  }
+}
+
+.panel-body.feed-summary{
+    border-top: 1px solid #c8c8c8;
     td{
       vertical-align: top;
       img{
         margin-right: 10px;
       }
+      ol{
+        strong{
+          display:none;
+        }
+        > a{
+          font-weight: bold;
+        }
+        > li{
+          margin-top: 5px;
+          margin-bottom: 5px;
+        }
+      }
     }
   }
-}

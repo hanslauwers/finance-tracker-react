@@ -19,11 +19,9 @@
             <%= link_to 'Delete', user_stock_path(userstock), method: :delete, :data => {confirm: "Are you sure?"},
                       class: "btn btn-xs btn-danger" %>
           <% end %>
-            <div class="btn btn-xs btn-success" onclick="javascript:$('#<%= userstock.ticker %>-news-container').toggle();">Show/Hide News</div>
+            <%= link_to 'News for Stock', stock_path(userstock), class: 'btn btn-xs btn-success' %>
           </div>
         </div>
-        
-        <%= render partial: 'stocks/feed', :locals => {:userstock => userstock} %>
       </div>
     <% end %>
   </div>

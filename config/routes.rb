@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => { :registrations => 'user/registrations' }
   resources :user_stocks, except: [:edit, :update, :show]
   resources :users, only: [:show]
+  resources :stocks, only: [:show]
   resources :friendships
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
