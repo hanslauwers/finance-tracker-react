@@ -11,23 +11,34 @@ class Stock < ActiveRecord::Base
   end
   
   def self.new_from_lookup(ticker_symbol)
-    looked_up_stock = StockQuote::Stock.quote(ticker_symbol)
-    return nil unless looked_up_stock.name
+    # looked_up_stock = StockQuote::Stock.quote(ticker_symbol)
+    # return nil unless looked_up_stock.name
     
-    new_stock = new(ticker: looked_up_stock.symbol, name: looked_up_stock.name)
-    new_stock.last_price = new_stock.price
-    new_stock
+    # new_stock = new(ticker: looked_up_stock.symbol, name: looked_up_stock.name)
+    # new_stock.last_price = new_stock.price
+    # new_stock
+    
+    begin 
+      looked_up_stock = StockQuote::Stock.quote(ticker_symbol)
+      new(ticker: looked_up_stock.symbol, name: looked_up_stock.company_name, last_price: looked_up_stock.close)
+    rescue Exception => e 
+      return nil
+    end
   end
   
   def price
-    closing_price = StockQuote::Stock.quote(ticker).l
-    return "#{closing_price} (Closing)" if closing_price
-    
-    opening_price = StockQuote::Stock.quote(ticker).op
-    return "#{opening_price} (Opening)" if opening_price
-    
-    "Unavailable"
+    StockQuote::Stock.quote(ticker).latest_price
   end
+  
+  # def price
+  #   closing_price = StockQuote::Stock.quote(ticker).l
+  #   return "#{closing_price} (Closing)" if closing_price
+    
+  #   opening_price = StockQuote::Stock.quote(ticker).op
+  #   return "#{opening_price} (Opening)" if opening_price
+    
+  #   "Unavailable"
+  # end
   
   def get_feed_entries_for_stock
     if(name)
