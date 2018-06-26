@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'hello_world', to: 'hello_world#index'
   devise_for :users, :controllers => { :registrations => 'user/registrations' }
   resources :user_stocks, except: [:edit, :update, :show]
   resources :users, only: [:show]
