@@ -1,38 +1,32 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import _ from 'lodash'
+
+import StockSearchBar from './StockSearchBar'
+import StockSearchResult from './StockSearchResult'
 
 class SearchStocks extends Component {
   constructor(props) {
-    super(props)
-
-    this.state = { textvalue: '' }
+    super(props);
+    this.state = { stock: {} }
+    this.onSearchTermChange = this.onSearchTermChange.bind(this)
   }
 
-  onInputChange(value) {
-    this.setState({ textvalue: value })
-    console.log(value)
+  onSearchTermChange(value) {
+    const url = '/search_stocks.json?stock=' + value + '&current_user_id=' + this.props.current_user_id
+    fetch(url)
+      .then((response) => {return response.json()})
+      .then((data) => {this.setState({ stock: data }) });
   }
 
   render() {
     return (
-      <div id='stock-lookup'>
-        <h3>Search for Stocks</h3>
-        <form id='stock-lookup-form'>
-          <div className='row no-padding text-center col-md-12'>
-            <div className='col-md-12'>
-              <input
-                type='text'
-                placeholder='Stock ticker symbol'
-                autoFocus='true'
-                className='search-box input-lg'
-                value= { this.state.textvalue }
-                onChange={ event => this.onInputChange(event.target.value) }/>
-            </div>
-          </div>
-        </form>
+      <div>
+        <StockSearchBar onSearchTermChange={this.onSearchTermChange} />
+        <StockSearchResult stock={this.state.stock} user_id={this.props.current_user_id} />
       </div>
-    )
+    );
   }
 }
 
-export default SearchStocks
+export default SearchStocks;

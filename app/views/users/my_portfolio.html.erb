@@ -1,4 +1,2 @@
-<%= react_component("SearchStocks", props: {}, prerender: false) %>
-
-<%= render 'stocks/lookup' %>
-<%= render 'stocks/list' %>
+<%= react_component("SearchStocks", props: { current_user_id: current_user.id }, prerender: false) %>
+<%= react_component("StocksList", props: { user_stocks: current_user.stocks, current_user_id: current_user.id, user_id: @user.id}, prerender: false) %>

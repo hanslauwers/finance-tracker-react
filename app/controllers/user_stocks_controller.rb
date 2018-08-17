@@ -1,5 +1,6 @@
 class UserStocksController < ApplicationController
   before_action :set_user_stock, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:create]
 
   # GET /user_stocks
   # GET /user_stocks.json
@@ -24,17 +25,18 @@ class UserStocksController < ApplicationController
   # POST /user_stocks
   # POST /user_stocks.json
   def create
+    user = User.find(params[:user_id])
     if params[:stock_id].present?
       @user_stock = UserStock.new(stock_id: params[:stock_id],
-                                  user: current_user)
+                                  user: user)
     else
       stock = Stock.find_by_ticker(params[:stock_ticker])
       if stock
-        @user_stock = UserStock.new(stock: stock, user: current_user)
+        @user_stock = UserStock.new(stock: stock, user: user)
       else
         stock = Stock.new_from_lookup(params[:stock_ticker])
         if stock.save
-          @user_stock = UserStock.new(stock: stock, user: current_user)
+          @user_stock = UserStock.new(stock: stock, user: user)
         else
           @user_stock = nil
           flash[:error] = 'This stock is not available'
