@@ -2,10 +2,7 @@ Rails.application.routes.draw do
   
   devise_for :users, :controllers => { :registrations => 'user/registrations' }
 
-  get 'search_stocks', to: 'stocks#search'
-  post 'add_stock', to: 'user_stocks#create'
-
-  resources :user_stocks, except: [:edit, :update, :show, :create]
+  resources :user_stocks, except: [:edit, :update, :show, :create, :destroy]
   resources :users, only: [:show]
   resources :stocks, only: [:show]
   resources :friendships
@@ -18,6 +15,10 @@ Rails.application.routes.draw do
   get 'my_friends', to: 'users#my_friends'
   get 'search_friends', to: 'users#search'
   post 'add_friend', to: 'users#add_friend'
+  
+  get 'search_stocks', to: 'stocks#search'
+  post 'add_stock', to: 'user_stocks#create'
+  delete 'delete_stock', to: 'user_stocks#destroy'
 
   
 end

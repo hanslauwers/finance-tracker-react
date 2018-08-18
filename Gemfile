@@ -8,7 +8,7 @@ gem 'rails', '= 5.0.1'
 gem 'devise'
 gem 'twitter-bootstrap-rails'
 gem 'devise-bootstrap-views'
-gem 'stock_quote'
+gem 'stock_quote', '~> 2.0'
 gem 'feedjira'
 
 gem "react_on_rails", "11.0.9"

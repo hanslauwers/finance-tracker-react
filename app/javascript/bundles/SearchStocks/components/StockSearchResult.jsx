@@ -4,14 +4,12 @@ import React, {Component} from 'react'
 export default class StockSearchResult extends Component {
   constructor(props) {
     super(props);
-
-    this.addStock = this.addStock.bind(this)
   }
 
   addStockButton() {
     if(this.props.stock.can_add_stock) {
       return (
-        <a onClick={this.addStock}  
+        <a onClick={() => this.props.onAddStock(this.props.stock)}  
                className='btn btn-xs btn-success add-to-stocks-btn'>Add this stock</a>
       )
     } else {
@@ -26,26 +24,6 @@ export default class StockSearchResult extends Component {
         </span>
       )
     }
-  }
-
-  addStock() {
-    const stock_name = this.props.stock.name
-    const data = {
-      user_id: this.props.user_id,
-      stock_ticker: this.props.stock.ticker,
-      stock_id: this.props.stock.id
-    }
-    const url = '/add_stock.json'
-    return fetch(url, {
-        method: "POST",
-        headers:{
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data) // body data type must match "Content-Type" header
-    })
-    .then(response => response.json())
-    .catch(error => console.error('Error:', error))
-    .then(response => console.log('Success:', response))
   }
 
   render(){

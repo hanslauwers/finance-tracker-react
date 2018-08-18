@@ -4,12 +4,18 @@ import _ from 'lodash'
 
 import StockSearchBar from './StockSearchBar'
 import StockSearchResult from './StockSearchResult'
+import StocksList from './StocksList'
 
 class SearchStocks extends Component {
   constructor(props) {
     super(props);
-    this.state = { stock: {} }
+
+    this.state = { stock: {}, user_stocks: this.props.user_stocks }
+
     this.onSearchTermChange = this.onSearchTermChange.bind(this)
+    this.addStock = this.addStock.bind(this)
+    this.deleteStock = this.deleteStock.bind(this)
+    this.handleAddedStock = this.handleAddedStock.bind(this)
   }
 
   onSearchTermChange(value) {
@@ -19,11 +25,63 @@ class SearchStocks extends Component {
       .then((data) => {this.setState({ stock: data }) });
   }
 
+  handleAddedStock(response) {
+    console.log('added response', response)
+    this.setState( { user_stocks: [...this.state.user_stocks, response] })
+  }
+
+  addStock(stock) {
+    const data = {
+      user_id: this.props.user_id,
+      stock_ticker: stock.ticker,
+      stock_id: stock.id
+    }
+    const url = '/add_stock.json'
+    return fetch(url, {
+        method: "POST",
+        headers:{
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data) // body data type must match "Content-Type" header
+    })
+    .then(response => response.json())
+    .catch(error => console.error('Error:', error))
+    .then(response => this.handleAddedStock(response))
+  }
+
+  handleDeletedStock(response) {
+    console.log('delete response', response)
+  }
+
+  deleteStock(user_stock) {
+    const url = '/delete_stock'
+    const data = {
+      stock_id: user_stock.id,
+      user_id: this.props.current_user_id
+    }
+    return fetch(url, {
+        method: "DELETE",
+        headers:{
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .catch(error => console.error('Error:', error))
+    .then(response => this.handleDeletedStock(response))
+  }
+
   render() {
     return (
       <div>
         <StockSearchBar onSearchTermChange={this.onSearchTermChange} />
-        <StockSearchResult stock={this.state.stock} user_id={this.props.current_user_id} />
+        <StockSearchResult stock={this.state.stock}
+                           user_id={this.props.current_user_id}
+                           onAddStock={this.addStock} />
+        <StocksList current_user_id={ this.props.current_user_id }
+                    user_id={ this.props.user_id }
+                    user_stocks={ this.state.user_stocks }
+                    onDeleteStock={ this.deleteStock } />
       </div>
     );
   }
