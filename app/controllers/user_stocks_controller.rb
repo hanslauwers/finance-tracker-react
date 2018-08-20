@@ -1,5 +1,7 @@
 class UserStocksController < ApplicationController
-  before_action :set_user_stock, only: [:show, :edit, :update, :destroy]
+  before_action :set_user_stock, only: [:show, :edit, :update]
+  before_action :authenticate_user!, except: [:create, :destroy]
+  skip_before_action :verify_authenticity_token, only: [:destroy]
 
   # GET /user_stocks
   # GET /user_stocks.json
@@ -24,17 +26,18 @@ class UserStocksController < ApplicationController
   # POST /user_stocks
   # POST /user_stocks.json
   def create
+    user = User.find(params[:user_id])
     if params[:stock_id].present?
       @user_stock = UserStock.new(stock_id: params[:stock_id],
-                                  user: current_user)
+                                  user: user)
     else
       stock = Stock.find_by_ticker(params[:stock_ticker])
       if stock
-        @user_stock = UserStock.new(stock: stock, user: current_user)
+        @user_stock = UserStock.new(stock: stock, user: user)
       else
         stock = Stock.new_from_lookup(params[:stock_ticker])
         if stock.save
-          @user_stock = UserStock.new(stock: stock, user: current_user)
+          @user_stock = UserStock.new(stock: stock, user: user)
         else
           @user_stock = nil
           flash[:error] = 'This stock is not available'
@@ -46,7 +49,7 @@ class UserStocksController < ApplicationController
       if @user_stock.save
         format.html { redirect_to root_path,
                       notice: "Stock #{@user_stock.stock.ticker} was successfully added to portfolio." }
-        format.json { render :show, status: :created, location: @user_stock }
+        format.json { render json: @user_stock.stock, notice: 'Stock was successfully added.' }
       else
         format.html { render :new }
         format.json { render json: @user_stock.errors, status: :unprocessable_entity }
@@ -71,10 +74,11 @@ class UserStocksController < ApplicationController
   # DELETE /user_stocks/1
   # DELETE /user_stocks/1.json
   def destroy
-    @user_stock.destroy
+    user_stock = UserStock.find_by(user_id: params[:user_id], stock_id: params[:stock_id])
+    user_stock.destroy
     respond_to do |format|
-      format.html { redirect_to my_portfolio_path, notice: 'Stock was successfully deleted.' }
-      format.json { head :no_content }
+      #format.html { redirect_to my_portfolio_path, notice: 'Stock was successfully deleted.' }
+      format.json { render json: Stock.find(params[:stock_id]), notice: 'Stock was successfully deleted.' }
     end
   end
 

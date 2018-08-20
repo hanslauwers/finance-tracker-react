@@ -2,6 +2,9 @@ class UsersController < ApplicationController
   
   def my_portfolio
     @user_stocks = current_user.stocks
+    @user_stocks.each do |stock|
+      stock.update!(last_price: stock.price) unless stock.last_price.to_f == stock.price
+    end
     @user = current_user
   end
   
