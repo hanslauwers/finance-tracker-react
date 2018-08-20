@@ -10,7 +10,7 @@ class SearchStocks extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { stock: {}, user_stocks: this.props.user_stocks }
+    this.state = { stock: {}, user_stocks: this.props.user_stocks, search_bar_value: '' }
 
     this.onSearchTermChange = this.onSearchTermChange.bind(this)
     this.addStock = this.addStock.bind(this)
@@ -19,15 +19,17 @@ class SearchStocks extends Component {
   }
 
   onSearchTermChange(value) {
+    this.setState({ search_bar_value: value })
     const url = '/search_stocks.json?stock=' + value + '&current_user_id=' + this.props.current_user_id
     fetch(url)
       .then((response) => {return response.json()})
-      .then((data) => {this.setState({ stock: data }) });
+      .then((data) => {this.setState({ stock: data }) })
   }
 
   handleAddedStock(response) {
-    console.log('added response', response)
-    this.setState( { user_stocks: [...this.state.user_stocks, response] })
+    this.setState( { user_stocks: [...this.state.user_stocks, response],
+                     search_bar_value: '',
+                     stock: {} })
   }
 
   addStock(stock) {
@@ -50,7 +52,7 @@ class SearchStocks extends Component {
   }
 
   handleDeletedStock(response) {
-    console.log('delete response', response)
+    this.setState({ user_stocks: _.filter(this.state.user_stocks, (stock) => stock.id != response.id) })
   }
 
   deleteStock(user_stock) {
@@ -74,7 +76,8 @@ class SearchStocks extends Component {
   render() {
     return (
       <div>
-        <StockSearchBar onSearchTermChange={this.onSearchTermChange} />
+        <StockSearchBar onSearchTermChange={this.onSearchTermChange}
+                        searchBarValue={this.state.search_bar_value} />
         <StockSearchResult stock={this.state.stock}
                            user_id={this.props.current_user_id}
                            onAddStock={this.addStock} />

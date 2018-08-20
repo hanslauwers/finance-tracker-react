@@ -20,7 +20,7 @@ class StocksController < ApplicationController
       stock_json[:id] = @stock.id
       stock_json[:ticker] = @stock.ticker
       stock_json[:name] = @stock.name
-      stock_json[:last_price] = @stock.last_price
+      stock_json[:last_price] = @stock.price
       stock_json[:can_add_stock]= user.can_add_stock?(@stock.ticker)
       stock_json[:under_stock_limit] = user.under_stock_limit?
       stock_json[:stock_already_added] = user.stock_already_added?(@stock.ticker)

@@ -4,18 +4,15 @@ import React, {Component} from 'react'
 export default class StockSearchBar extends Component {
   constructor(props) {
     super(props);
-
-    this.state = { textvalue: '' }
   }
 
   onInputChange(value) {
-    this.setState({ textvalue: value })
     this.props.onSearchTermChange(value)
   }
 
   render() {
     return (
-      <div id='stock-lookup'>
+      <div id='stock-lookup' className='stock-lookup'>
         <h3>Search for Stocks</h3>
         <form id='stock-lookup-form'>
           <div className='row no-padding'>
@@ -25,7 +22,7 @@ export default class StockSearchBar extends Component {
                 placeholder='Stock ticker symbol'
                 autoFocus='true'
                 className='search-box input-lg'
-                value= { this.state.textvalue }
+                value= { this.props.searchBarValue }
                 onChange={ event => this.onInputChange(event.target.value) }/>
             </div>
           </div>

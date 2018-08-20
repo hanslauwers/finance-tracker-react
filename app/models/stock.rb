@@ -10,14 +10,7 @@ class Stock < ActiveRecord::Base
     where(ticker: ticker_symbol).first
   end
   
-  def self.new_from_lookup(ticker_symbol)
-    # looked_up_stock = StockQuote::Stock.quote(ticker_symbol)
-    # return nil unless looked_up_stock.name
-    
-    # new_stock = new(ticker: looked_up_stock.symbol, name: looked_up_stock.name)
-    # new_stock.last_price = new_stock.price
-    # new_stock
-    
+  def self.new_from_lookup(ticker_symbol)    
     begin 
       looked_up_stock = StockQuote::Stock.quote(ticker_symbol)
       new(ticker: looked_up_stock.symbol, name: looked_up_stock.company_name, last_price: looked_up_stock.close)
@@ -27,7 +20,7 @@ class Stock < ActiveRecord::Base
   end
   
   def price
-    StockQuote::Stock.quote(ticker).latest_price
+    StockQuote::Stock.quote(ticker).close
   end
   
   # def price

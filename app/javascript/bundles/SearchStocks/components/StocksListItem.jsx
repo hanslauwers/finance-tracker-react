@@ -22,7 +22,10 @@ export default class StocksListItem extends Component {
              className="btn btn-xs btn-danger delete-stock-btn">
             Delete
           </a>
-          <a className='btn btn-xs btn-success news-for-stock-btn'>News for Stock</a>
+          <a href={ 'stocks/' + user_stock.id }
+             className='btn btn-xs btn-success news-for-stock-btn'>
+            News for Stock
+          </a>
         </div>
       )
     }
