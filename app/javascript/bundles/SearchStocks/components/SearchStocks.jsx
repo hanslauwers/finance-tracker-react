@@ -20,7 +20,9 @@ class SearchStocks extends Component {
 
   onSearchTermChange(value) {
     this.setState({ search_bar_value: value })
-    const url = '/search_stocks.json?stock=' + value + '&current_user_id=' + this.props.current_user_id
+    const url = '/api/v1/search_stocks?stock=' + value + 
+                                      '&user_email=' + this.props.current_user.email + 
+                                      '&user_token=' + this.props.current_user.authentication_token
     fetch(url)
       .then((response) => {return response.json()})
       .then((data) => {this.setState({ stock: data }) })
@@ -34,11 +36,12 @@ class SearchStocks extends Component {
 
   addStock(stock) {
     const data = {
-      user_id: this.props.user_id,
       stock_ticker: stock.ticker,
-      stock_id: stock.id
+      stock_id: stock.id,
+      user_email: this.props.current_user.email,
+      user_token: this.props.current_user.authentication_token
     }
-    const url = '/add_stock.json'
+    const url = '/api/v1/add_stock'
     return fetch(url, {
         method: "POST",
         headers:{
@@ -56,10 +59,12 @@ class SearchStocks extends Component {
   }
 
   deleteStock(user_stock) {
-    const url = '/delete_stock'
+    const url = '/api/v1/delete_stock'
     const data = {
       stock_id: user_stock.id,
-      user_id: this.props.current_user_id
+      user_id: this.props.current_user.id,
+      user_email: this.props.current_user.email,
+      user_token: this.props.current_user.authentication_token
     }
     return fetch(url, {
         method: "DELETE",
@@ -81,7 +86,7 @@ class SearchStocks extends Component {
         <StockSearchResult stock={this.state.stock}
                            user_id={this.props.current_user_id}
                            onAddStock={this.addStock} />
-        <StocksList current_user_id={ this.props.current_user_id }
+        <StocksList current_user_id={ this.props.current_user.id }
                     user_id={ this.props.user_id }
                     user_stocks={ this.state.user_stocks }
                     onDeleteStock={ this.deleteStock } />

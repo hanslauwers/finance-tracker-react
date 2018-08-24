@@ -8,8 +8,6 @@ export default class StocksList extends Component {
     super(props)
   }
 
-  
-
   userStocksList() {
     let result = _.map(this.props.user_stocks, 
       user_stock =>
