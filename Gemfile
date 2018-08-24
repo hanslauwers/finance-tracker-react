@@ -6,6 +6,8 @@ gem 'rails', '~> 5.0.1'
 
 # Use Devise for authentication
 gem 'devise'
+gem 'simple_token_authentication', '~> 1.15', '>= 1.15.1'
+
 gem 'twitter-bootstrap-rails'
 gem 'devise-bootstrap-views'
 gem 'stock_quote', '~> 2.0'
