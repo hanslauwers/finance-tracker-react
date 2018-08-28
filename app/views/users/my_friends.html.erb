@@ -1,6 +1,7 @@
 <%= react_component("SearchFriends",
                       props: {
-                        current_user: current_user
+                        current_user: current_user,
+                        friends: @friendships
                       },
                       prerender: false
                     ) %>
