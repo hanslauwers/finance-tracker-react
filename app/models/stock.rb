@@ -20,7 +20,8 @@ class Stock < ActiveRecord::Base
   end
   
   def price
-    StockQuote::Stock.quote(ticker).close
+    100
+    #StockQuote::Stock.quote(ticker).close
   end
   
   # def price
@@ -37,7 +38,7 @@ class Stock < ActiveRecord::Base
     if(name)
       url = "https://news.google.com/news/rss/search/section/q/#{name}/#{name}?hl=en&ned=us".gsub(' ', '%20')
       feed = Feedjira::Feed.fetch_and_parse(url)
-      feed.entries = feed.entries[0 .. 10]
+      feed.entries = feed.entries[0..10]
       feed.entries
     else
       return nil

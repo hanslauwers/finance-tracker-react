@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import FriendsListItem from './FriendsListItem'
+
 export default class FriendsList extends Component {
   constructor(props) {
     super(props)
@@ -7,18 +9,12 @@ export default class FriendsList extends Component {
 
   renderFriendsList(){
     let result = _.map(this.props.friends,
-      (friend) => {
-        return (
-          <tr key={ friend.id }>
-            <td>{ friend.full_name }</td>
-            <td>{ friend.email }</td>
-            <td><a href={ 'users/' + friend.id } className='btn btn-xs btn-primary view-profile-btn'>View profile</a>
-                <a onClick={ () => this.props.onRemoveFriend(friend) } className='btn btn-xs btn-danger rm-friend-btn'>Remove friend</a>
-            </td>
-          </tr>
-        )
-      })
-    return result
+      friend => 
+        <FriendsListItem key={ friend.id }
+                         friend={ friend }
+                         onRemoveFriend={ this.props.onRemoveFriend } />
+      );
+    return result;
   }
 
   render() {
