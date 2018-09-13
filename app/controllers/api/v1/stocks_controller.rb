@@ -1,7 +1,6 @@
 class Api::V1::StocksController < Api::V1::ApplicationController
   include TransformToJson
   
-  before_action :authenticate_user_from_token!
 
   def search
     if params[:stock]
@@ -10,8 +9,7 @@ class Api::V1::StocksController < Api::V1::ApplicationController
     end
 
     if @stock
-      user = User.find_by(email:params[:user_email])
-      render json: stocks_for_user_to_json(user, @stock)
+      render json: stocks_for_user_to_json(current_user, @stock)
     else
       render json: {}
     end

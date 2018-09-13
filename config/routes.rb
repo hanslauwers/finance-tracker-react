@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :users, :controllers => { :registrations => 'user/registrations' }
+  devise_for :users, :controllers => { :registrations => 'user/registrations', :sessions => 'user/sessions'  }
 
   resources :user_stocks, except: [:edit, :update, :show, :create, :destroy]
   resources :users, only: [:show]

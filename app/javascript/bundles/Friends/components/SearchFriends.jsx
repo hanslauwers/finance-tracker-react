@@ -42,7 +42,6 @@ export default class SearchFriends extends Component {
     .then(response => response.json())
     .catch(error => console.error('Error:', error))
     .then(response => this.handleAddedFriend(user, response))
-    console.log('Add Friend', user)
   }
 
   handleAddedFriend(response) {
