@@ -32,6 +32,7 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'welcome#index'
+  get 'search_stocks', to: 'welcome#index'
   # get 'my_portfolio', to: 'users#my_portfolio'
   get 'my_friends', to: 'users#my_friends'
 
