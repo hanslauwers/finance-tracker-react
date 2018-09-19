@@ -10,7 +10,7 @@ class SearchStocks extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { stock: {}, user_stocks: this.props.user_stocks, search_bar_value: '' }
+    this.state = { stock: {}, my_stocks: [], search_bar_value: '', user : this.props.location.state.user }
 
     this.onSearchTermChange = this.onSearchTermChange.bind(this)
     this.addStock = this.addStock.bind(this)
@@ -20,16 +20,18 @@ class SearchStocks extends Component {
 
   onSearchTermChange(value) {
     this.setState({ search_bar_value: value })
-    const url = '/api/v1/search_stocks?stock=' + value + 
-                                      '&user_email=' + this.props.current_user.email + 
-                                      '&user_token=' + this.props.current_user.authentication_token
-    fetch(url)
+    const url = '/api/v1/search_stocks?stock=' + value + '&user_id=' + this.state.user.id
+    fetch(url, {
+        method: "GET",
+        headers:{
+          'Authorization': localStorage.getItem('TrackerAuthToken')
+        }})
       .then((response) => {return response.json()})
       .then((data) => {this.setState({ stock: data }) })
   }
 
   handleAddedStock(response) {
-    this.setState( { user_stocks: [...this.state.user_stocks, response],
+    this.setState( { my_stocks: [...this.state.my_stocks, response],
                      search_bar_value: '',
                      stock: {} })
   }
@@ -38,14 +40,14 @@ class SearchStocks extends Component {
     const data = {
       stock_ticker: stock.ticker,
       stock_id: stock.id,
-      user_email: this.props.current_user.email,
-      user_token: this.props.current_user.authentication_token
+      user_email: this.state.user.email
     }
     const url = '/api/v1/add_stock'
     return fetch(url, {
         method: "POST",
         headers:{
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('TrackerAuthToken')
         },
         body: JSON.stringify(data) // body data type must match "Content-Type" header
     })
@@ -55,21 +57,20 @@ class SearchStocks extends Component {
   }
 
   handleDeletedStock(response) {
-    this.setState({ user_stocks: _.filter(this.state.user_stocks, (stock) => stock.id != response.id) })
+    this.setState({ my_stocks: _.filter(this.state.my_stocks, (stock) => stock.id != response.id) })
   }
 
   deleteStock(user_stock) {
     const url = '/api/v1/delete_stock'
     const data = {
       stock_id: user_stock.id,
-      user_id: this.props.current_user.id,
-      user_email: this.props.current_user.email,
-      user_token: this.props.current_user.authentication_token
+      user_id: this.state.user.id
     }
     return fetch(url, {
         method: "DELETE",
         headers:{
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('TrackerAuthToken')
         },
         body: JSON.stringify(data)
     })
@@ -78,17 +79,32 @@ class SearchStocks extends Component {
     .then(response => this.handleDeletedStock(response))
   }
 
+  componentWillReceiveProps = (nextProps) => {
+    this.setState({ 'user' : this.props.location.state.user })
+  }
+
+  componentDidMount = () => {
+    const url = '/api/v1/my_stocks?user_id=' + this.state.user.id
+    fetch(url, {
+        method: "GET",
+        headers:{
+          'Authorization': localStorage.getItem('TrackerAuthToken')
+        }})
+      .then((response) => {return response.json()})
+      .then((data) => {this.setState({ my_stocks: data }) })
+  }
+
   render() {
     return (
       <div>
         <StockSearchBar onSearchTermChange={this.onSearchTermChange}
                         searchBarValue={this.state.search_bar_value} />
         <StockSearchResult stock={this.state.stock}
-                           user_id={this.props.current_user_id}
+                           user_id={this.state.user.id}
                            onAddStock={this.addStock} />
-        <StocksList current_user_id={ this.props.current_user.id }
-                    user_id={ this.props.user_id }
-                    user_stocks={ this.state.user_stocks }
+        <StocksList current_user_id={ this.state.user.id }
+                    user_id={ this.state.user.id }
+                    my_stocks={ this.state.my_stocks }
                     onDeleteStock={ this.deleteStock } />
       </div>
     );

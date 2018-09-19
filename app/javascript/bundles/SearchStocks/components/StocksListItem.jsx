@@ -5,16 +5,16 @@ export default class StocksListItem extends Component {
     return (
       <div className="stock-table-data col-md-12 panel panel-default">
         <div className="stock-data row">
-          <div className="col-md-3"><strong>{ this.props.user_stock.name }</strong></div>
-          <div className="col-md-3"><strong>{ this.props.user_stock.ticker }</strong></div>
-          <div className="col-md-3"><strong>{ this.props.user_stock.last_price }</strong></div>
-          { this.userStockLinks(this.props.user_stock) }
+          <div className="col-md-3"><strong>{ this.props.my_stock.name }</strong></div>
+          <div className="col-md-3"><strong>{ this.props.my_stock.ticker }</strong></div>
+          <div className="col-md-3"><strong>{ this.props.my_stock.last_price }</strong></div>
+          { this.myStockLinks(this.props.my_stock) }
         </div>
       </div>
     )
   }
 
-  userStockLinks(user_stock) {
+  myStockLinks(user_stock) {
     if(this.props.user_id == this.props.current_user_id) {
       return (
         <div className="col-md-3">

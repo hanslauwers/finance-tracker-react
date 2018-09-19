@@ -6,7 +6,7 @@ gem 'rails', '~> 5.0.1'
 
 # Use Devise for authentication
 gem 'devise'
-gem 'simple_token_authentication', '~> 1.15', '>= 1.15.1'
+gem 'devise-jwt', '~> 0.5.7'
 
 gem 'twitter-bootstrap-rails'
 gem 'devise-bootstrap-views'
@@ -49,7 +49,10 @@ group :development, :test do
   
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
-  
+  gem 'rspec', '~> 3.5'
+  gem 'rspec-rails', '~> 3.4', '>= 3.4.2'
+  gem 'fabrication', '~> 2.15', '>= 2.15.2'
+  gem 'faker', '~> 1.6', '>= 1.6.3'
 end
 
 group :development do
@@ -60,10 +63,16 @@ group :development do
   gem 'spring'
 end
 
+group :test do
+  gem 'json-schema', '~> 2.8'
+end
+
 group :production do
   gem 'pg', '~> 0.21'
   gem 'rails_12factor'
 end
 
-
 gem 'mini_racer', platforms: :ruby
+gem 'dotenv-rails', '~> 2.5'
+gem 'sidekiq', '~> 5.2', '>= 5.2.2'
+gem 'sidekiq-cron', '~> 1.0', '>= 1.0.4'

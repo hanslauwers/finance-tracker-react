@@ -1,0 +1,8 @@
+<%= react_component("SearchStocks",
+                      props: {
+                        user_stocks: current_user.stocks,
+                        current_user: current_user,
+                        user_id: @user.id
+                      },
+                      prerender: false
+                    ) %>

@@ -1,7 +1,6 @@
 class User < ActiveRecord::Base
-  acts_as_token_authenticatable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :jwt_authenticatable, jwt_revocation_strategy: JWTBlacklist
   has_many :user_stocks
   has_many :stocks, through: :user_stocks
   has_many :friendships

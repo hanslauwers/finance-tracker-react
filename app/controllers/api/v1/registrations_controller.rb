@@ -1,19 +1,32 @@
 class Api::V1::RegistrationsController < Devise::RegistrationsController
+  respond_to :json
+  include ErrorHandling
 
   def create
-    user = User.new(user_params)
-    if user.save
-      render :json=> user.as_json(:auth_token=>user.authentication_token, :email => user.email ), :status=>201
-      return
+    build_resource(sign_up_params)
+    if resource.save!
+      render json: resource
     else
-      warden.custom_failure!
-      render :json => user.errors, :status=>422
+      validation_error(resource)
     end
   end
 
   private
 
-  def user_params
-    params.require(:user).permit(:email,:password,:password_confirmation,:mobile,:name)
+  def sign_up_params
+    params.require(:user).permit(:email, :password, :password_confirmation, :first_name, :last_name)
+  end
+
+  def validation_error(resource)
+    render json: {
+      errors: [
+        {
+          status: '400',
+          title: 'Bad Request',
+          detail: resource.errors,
+          code: '100'
+        }
+      ]
+    }, status: :bad_request
   end
 end

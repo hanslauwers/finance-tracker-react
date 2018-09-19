@@ -1,0 +1,24 @@
+{
+  // "type": "object",
+  // "required": ["user"],
+  // "properties": {
+  //   "user" : {
+  //     "type" : "object",
+  //     "required" : [
+  //       "authentication_token",
+  //       "email",
+  //       "first_name",
+  //       "id",
+  //       "last_name"
+  //     ],
+      "properties" : {
+        "created_at" : { "type" : "string", "format": "date-time" },
+        "email" : { "type" : "string" },
+        "first_name" : { "type" : "string" },
+        "id" : { "type" : "integer" },
+        "last_name" : { "type" : "string" },
+        "updated_at" : { "type" : "string", "format": "date-time" }
+      }
+    //}
+  //}
+}

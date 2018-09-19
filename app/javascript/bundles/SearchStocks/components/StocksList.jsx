@@ -8,14 +8,14 @@ export default class StocksList extends Component {
     super(props)
   }
 
-  userStocksList() {
-    let result = _.map(this.props.user_stocks, 
-      user_stock =>
-          <StocksListItem user_stock={ user_stock }
+  myStocksList() {
+    let result = _.map(this.props.my_stocks, 
+      my_stock =>
+          <StocksListItem my_stock={ my_stock }
                           current_user_id={ this.props.current_user_id }
                           user_id={ this.props.user_id }
                           onDeleteStock={ this.props.onDeleteStock }
-                          key={ user_stock.ticker }  />
+                          key={ my_stock.ticker }  />
     );
     return result;
   }
@@ -32,7 +32,7 @@ export default class StocksList extends Component {
           </div>
         </div>
         <div className="stock-table-data-container">
-          { this.userStocksList() }
+          { this.myStocksList() }
         </div>
       </div>
     )

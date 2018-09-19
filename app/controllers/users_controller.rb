@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  include TransformToJson
   
   def my_portfolio
     @user_stocks = current_user.stocks
@@ -9,7 +10,7 @@ class UsersController < ApplicationController
   end
   
   def my_friends
-    @friendships = current_user.friends
+    @friendships = users_to_json(current_user.friends)
   end
   
   def search
