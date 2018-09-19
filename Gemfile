@@ -74,3 +74,5 @@ end
 
 gem 'mini_racer', platforms: :ruby
 gem 'dotenv-rails', '~> 2.5'
+gem 'sidekiq', '~> 5.2', '>= 5.2.2'
+gem 'sidekiq-cron', '~> 1.0', '>= 1.0.4'

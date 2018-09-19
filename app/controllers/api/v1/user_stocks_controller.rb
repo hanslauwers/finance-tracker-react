@@ -1,5 +1,4 @@
 class Api::V1::UserStocksController < Api::V1::ApplicationController
-  before_action :authenticate_user_from_token!
 
   # POST /user_stocks
   # POST /user_stocks.json

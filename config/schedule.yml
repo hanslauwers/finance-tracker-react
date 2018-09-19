@@ -1,0 +1,4 @@
+update_stock_prices_job:
+  cron: "*/5 * * * *"
+  class: "StockPricesWorker"
+  queue: default

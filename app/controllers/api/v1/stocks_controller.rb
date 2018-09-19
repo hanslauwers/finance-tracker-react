@@ -3,13 +3,14 @@ class Api::V1::StocksController < Api::V1::ApplicationController
   
 
   def search
+    user = User.find(params[:user_id])
     if params[:stock]
       @stock = Stock.find_by_ticker(params[:stock])
       @stock ||= Stock.new_from_lookup(params[:stock])
     end
 
     if @stock
-      render json: stocks_for_user_to_json(current_user, @stock)
+      render json: stock_for_user_to_json(user, @stock)
     else
       render json: {}
     end

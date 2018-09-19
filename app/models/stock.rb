@@ -20,8 +20,7 @@ class Stock < ActiveRecord::Base
   end
   
   def price
-    100
-    #StockQuote::Stock.quote(ticker).close
+    StockQuote::Stock.quote(ticker).close
   end
   
   # def price

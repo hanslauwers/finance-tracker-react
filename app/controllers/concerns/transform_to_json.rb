@@ -16,7 +16,15 @@ module TransformToJson
     user_json
   end
 
-  def stocks_for_user_to_json(user, stock)
+  def stocks_for_user_to_json(user, stocks)
+    stocks_json = Array.new
+    stocks.each do |stock|
+      stocks_json << stock_for_user_to_json(user, stock)
+    end
+    stocks_json
+  end
+
+  def stock_for_user_to_json(user, stock)
     stock_json = stock.as_json
     stock_json['last_price'] = stock.price
     stock_json['can_add_stock']= user.can_add_stock?(stock.ticker)
